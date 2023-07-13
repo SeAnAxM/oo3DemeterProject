@@ -12,7 +12,7 @@ Class Description: This class will allow the user to play the first room of the 
 
 
 public class Layout1 {
-    public void startLayout1() {
+    public void start() {
         // Code for initializing and starting Layout 1
     }
 

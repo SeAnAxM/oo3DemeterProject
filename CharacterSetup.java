@@ -11,9 +11,8 @@ Class Description: The CharacterSetup class in this Java program is responsible 
 
  */
 
+import java.util.Scanner;
 public class CharacterSetup {
-
-    public class CharacterSetup {
         private String name;
         private String appearance;
 
@@ -79,5 +78,3 @@ public class CharacterSetup {
         // Other methods related to account setup
     }
 
-
-}

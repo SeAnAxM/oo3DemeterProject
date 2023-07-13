@@ -11,7 +11,7 @@ Class Description: This class will allow the user to play the third room of the 
  */
 
 public class Layout3 {
-    public void startLayout3() {
+    public void start() {
         // Code for initializing and starting Layout 3
     }
 

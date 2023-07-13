@@ -11,7 +11,7 @@ Class Description: This class will allow the user to play the second room of the
  */
 
 public class Layout2 {
-    public void startLayout2() {
+    public void start() {
         // Code for initializing and starting Layout 2
     }
 

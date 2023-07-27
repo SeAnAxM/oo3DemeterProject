@@ -1,0 +1,27 @@
+#mainPane {
+    -fx-background-image: url("layout1.jpg");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+}
+
+#scoreLabel {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Comic Sans MS";
+    -fx-color: #000000;
+    -fx-text-align: left;
+}
+
+#exitButton {
+    -fx-font-size: 18px;
+    -fx-text-fill: #ffffff; /* white font color */
+    -fx-background-color: #ff0000;
+    -fx-border-radius: 5px;
+    -fx-padding: 10px 20px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 5, 0, 0, 1); /* 3D effect */
+}
+
+#exitButton:hover {
+    -fx-background-color: #ff4040;
+}

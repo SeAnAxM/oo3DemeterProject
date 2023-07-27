@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="rootLayout" styleClass="bg" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oo3demeterproject.Layout3Controller">
+    <children>
+        <HBox layoutX="660.0" layoutY="20.0">
+            <Region HBox.hgrow="ALWAYS" />
+            <Button fx:id="exitButton" text="Exit to Menu" />
+        </HBox>
+        <VBox layoutX="80.0" layoutY="508.0" alignment="CENTER" spacing="5.0">
+            <Label fx:id="instructionLabel" text="Match the images according to their SDGs" />
+            <Label fx:id="matchStatusLabel" text="Not matched" />
+        </VBox>
+        <GridPane layoutX="225.0" layoutY="100.0" prefHeight="400.0" prefWidth="400.0" fx:id="gridPane">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="125.0" prefWidth="200.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="125.0" prefWidth="200.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="200.0" minHeight="125.0" prefHeight="200.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="200.0" minHeight="125.0" prefHeight="200.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="200.0" minHeight="125.0" prefHeight="200.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <Button fx:id="card1" onAction="#flipCard" prefWidth="125" prefHeight="125" />
+                <Button fx:id="card2" onAction="#flipCard" prefWidth="125" prefHeight="125" GridPane.columnIndex="1" />
+                <Button fx:id="card3" onAction="#flipCard" prefWidth="125" prefHeight="125" GridPane.rowIndex="1" />
+                <Button fx:id="card4" onAction="#flipCard" prefWidth="125" prefHeight="125" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <Button fx:id="card5" onAction="#flipCard" prefWidth="125" prefHeight="125" GridPane.rowIndex="2" />
+                <Button fx:id="card6" onAction="#flipCard" prefWidth="125" prefHeight="125" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            </children>
+        </GridPane>
+    </children>
+</AnchorPane>

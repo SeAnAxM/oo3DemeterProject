@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.oo3demeterproject.CharacterSetupController"
+      spacing="15" alignment="CENTER"
+      prefWidth="800" prefHeight="600" styleClass="background">
+
+    <Label text="Character Setup" styleClass = "title"/>
+    <TextField fx:id="usernameField" promptText="Enter your username"/>
+
+    <HBox alignment="CENTER" spacing="30">
+        <ImageView fx:id="businessmanImage" pickOnBounds="true" preserveRatio="true" fitHeight="140" fitWidth="140">
+            <image>
+                <Image url="@businessman.png"/>
+            </image>
+        </ImageView>
+        <ImageView fx:id="chefImage" pickOnBounds="true" preserveRatio="true" fitHeight="140" fitWidth="140">
+            <image>
+                <Image url="@chef.png"/>
+            </image>
+        </ImageView>
+        <ImageView fx:id="doctorImage" pickOnBounds="true" preserveRatio="true" fitHeight="140" fitWidth="140">
+            <image>
+                <Image url="@doctor.png"/>
+            </image>
+        </ImageView>
+    </HBox>
+
+    <Button fx:id="submitButton" text="Submit" onAction="#onSubmitButtonClick"/>
+
+</VBox>

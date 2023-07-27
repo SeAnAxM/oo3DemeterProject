@@ -1,0 +1,16 @@
+.dialog-pane {
+    -fx-background-color: #90EE90; /* Change the color as you like */
+    -fx-text-fill: #ffffff; /* Change the color as you like */
+}
+
+.dialog-pane .content {
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #000080;
+}
+
+.button {
+    -fx-background-color: #C70039; /* Change the color as you like */
+    -fx-text-fill: #ffffff; /* Change the color as you like */
+}

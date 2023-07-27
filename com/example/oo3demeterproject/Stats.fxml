@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+
+<VBox fx:id="mainPane" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.oo3demeterproject.StatsController"
+          spacing="150" alignment="TOP_CENTER" styleClass="background">
+
+    <Label text="Stats/Achievements" styleClass="title" VBox.vgrow="NEVER"/>
+
+    <HBox spacing="50">
+
+        <VBox fx:id="achievementsBox" styleClass="achievements-box" HBox.hgrow="ALWAYS">
+            <HBox>
+                <ImageView fx:id="achievement1Image" fitWidth="50" fitHeight="50"/>
+                <Label fx:id="achievement1Label" styleClass="achievement" text="Clear the Escape Room for the first time"/>
+            </HBox>
+            <HBox>
+                <ImageView fx:id="achievement2Image" fitWidth="50" fitHeight="50"/>
+                <Label fx:id="achievement2Label" styleClass="achievement" text="Clear the Escape Room in 3 minutes or less"/>
+            </HBox>
+            <HBox>
+                <ImageView fx:id="achievement3Image" fitWidth="50" fitHeight="50"/>
+                <Label fx:id="achievement3Label" styleClass="achievement" text="Clear the Escape Room in 2 minutes or less"/>
+            </HBox>
+            <HBox>
+                <ImageView fx:id="achievement4Image" fitWidth="50" fitHeight="50"/>
+                <Label fx:id="achievement4Label" styleClass="achievement" text="Clear the Escape Room in 1 minute or less"/>
+            </HBox>
+        </VBox>
+
+        <VBox id="statsBox" styleClass="stats-box"  spacing="10" HBox.hgrow="ALWAYS">
+            <Label fx:id="bestTimeLabel" styleClass="stat" />
+            <VBox>
+                <Label styleClass="achievement" text="Best Time per Room:"/>
+                <Label fx:id="bestTimeRoom1Label" styleClass="stat" />
+                <Label fx:id="bestTimeRoom2Label" styleClass="stat" />
+                <Label fx:id="bestTimeRoom3Label" styleClass="stat"/>
+            </VBox>
+        </VBox>
+
+    </HBox>
+    <HBox>
+        <Region HBox.hgrow="ALWAYS" /> <!-- Filler -->
+        <Button fx:id="exitButton" text="Back to Menu" />
+    </HBox>
+</VBox>

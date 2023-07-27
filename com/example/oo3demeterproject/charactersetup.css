@@ -1,0 +1,29 @@
+.background {
+    -fx-background-image: url('background.jpg');
+    -fx-background-size: stretch;
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat;
+}
+
+.title {
+    -fx-font-size: 24px;
+    -fx-margin-bottom: 10px;
+    -fx-text-weight: bold;
+    -fx-font-family: 'Century Gothic';
+}
+
+#submitButton {
+    -fx-min-width: 100px;
+    -fx-min-height: 25px;
+    -fx-font-size: 14px;
+    -fx-background-color: linear-gradient(#2A5058, #61a2b1);
+    -fx-border-color: #2A5058;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 5, 0, 0, 1);
+}
+
+#submitButton:hover {
+    -fx-background-color: linear-gradient(#61a2b1, #2A5058);
+}

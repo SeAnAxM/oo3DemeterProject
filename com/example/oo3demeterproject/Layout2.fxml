@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+
+<AnchorPane fx:id="rootLayout" xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.oo3demeterproject.Layout2Controller"
+            prefHeight="600.0" prefWidth="800.0">
+    <Pane fx:id="mainPane" styleClass="bg" prefHeight="600.0" prefWidth="800.0">
+        <VBox fx:id="buttonBox" layoutX="90.0" layoutY="150.0" spacing="20" alignment="CENTER">
+            <HBox spacing="10" alignment="CENTER">
+                <Button fx:id="button1" text="???" onAction="#showQuestion1" styleClass="question-button"/>
+                <Button fx:id="button2" text="???" onAction="#showQuestion2" styleClass="question-button"/>
+                <Button fx:id="button3" text="???" onAction="#showQuestion3" styleClass="question-button"/>
+            </HBox>
+            <HBox spacing="10" alignment="CENTER">
+                <Button fx:id="button4" text="???" onAction="#showQuestion4" styleClass="question-button"/>
+                <Button fx:id="button5" text="???" onAction="#showQuestion5" styleClass="question-button"/>
+            </HBox>
+        </VBox>
+        <TextField fx:id="passwordField" layoutX="325.0" layoutY="360.0" visible="false"/>
+        <Button fx:id="submitPassword" styleClass="clickButtons" layoutX="350.0" layoutY="435.0" onAction="#togglePasswordField">
+            <graphic>
+                <ImageView fitHeight="80.0" fitWidth="80.0"  preserveRatio="true">
+                    <image>
+                        <Image url="@padlock.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+
+        <Button fx:id="passwordSubmit" styleClass="clickButtons" layoutX="350.0" layoutY="395.0" text="Submit" visible="false" onAction="#submitPassword"/>
+
+        <Label fx:id="hintLabel" layoutX="330.0" layoutY="75.0" text="Hint: " />
+        <Label fx:id="wrongAnswer" layoutX="330.0" layoutY="533.0"/>
+        <Label fx:id="correctAnswer" layoutX="270.0" layoutY="533.0"/>
+        <Label fx:id="correctCode" layoutX="300.0" layoutY="533.0" styleClass="correct-answer"/>
+        <Label fx:id="wrongCode" layoutX="330.0" layoutY="533.0" styleClass="wrong-answer"/>
+    </Pane>
+
+    <Pane fx:id="questionPane1" prefHeight="600.0" prefWidth="800.0" styleClass="bg">
+        <Button fx:id="backButton1" styleClass="clickButtons" layoutX="600.0" layoutY="500.0" text="Back"/>
+        <Label layoutX="60.0" layoutY="70.0" text="How many SDGs are there?" styleClass="question"/>
+        <RadioButton fx:id="choiceA1" layoutX="100.0" layoutY="180.0" text="7" styleClass="radio-button"/>
+        <RadioButton fx:id="choiceB1" layoutX="100.0" layoutY="280.0" text="17" styleClass="radio-button"/>
+        <RadioButton fx:id="choiceC1" layoutX="100.0" layoutY="380.0" text="27" styleClass="radio-button"/>
+        <RadioButton fx:id="choiceD1" layoutX="100.0" layoutY="480.0" text="37" styleClass="radio-button"/>
+    </Pane>
+
+    <Pane fx:id="questionPane2" visible="false" prefHeight="600.0" prefWidth="800.0" styleClass="bg">
+        <Button fx:id="backButton2" styleClass="clickButtons" layoutX="600.0" layoutY="500.0" text="Back"/>
+        <Label layoutX="60.0" layoutY="70.0" text="SDG 2, 'Zero Hunger' aims to:" styleClass="question"/>
+        <RadioButton fx:id="choiceA2" layoutX="100.0" layoutY="150.0" text="Foster lifelong learning." styleClass="radio-button"/>
+        <RadioButton fx:id="choiceB2" layoutX="100.0" layoutY="250.0" text="Eradicate hunger, secure food, improve nutrition, and boost sustainable farming." styleClass="radio-button" wrapText="true"/>
+        <RadioButton fx:id="choiceC2" layoutX="100.0" layoutY="350.0" text="Combat climate change." styleClass="radio-button"/>
+        <RadioButton fx:id="choiceD2" layoutX="100.0" layoutY="450.0" text="Advance resilient infrastructure, inclusive industrialization, and innovation." styleClass="radio-button" wrapText="true"/>
+    </Pane>
+
+    <Pane fx:id="questionPane3" visible="false" prefHeight="600.0" prefWidth="800.0" styleClass="bg">
+        <Button fx:id="backButton3" styleClass="clickButtons" layoutX="600.0" layoutY="500.0" text="Back"/>
+        <Label layoutX="70.0" layoutY="70.0" text="SDG 14, 'Life Below Water', aims to conserve and sustainably use the oceans, seas, and marine resources for sustainable ________" styleClass="question" wrapText="true"/>
+        <TextField fx:id="answerField3" layoutX="480.0" layoutY="400.0"/>
+    </Pane>
+
+    <Pane fx:id="questionPane4" visible="false" prefHeight="600.0" prefWidth="800.0" styleClass="bg">
+        <Button fx:id="backButton4" styleClass="clickButtons" layoutX="600.0" layoutY="500.0" text="Back"/>
+        <Label layoutX="70.0" layoutY="70.0" text="SDG 13, 'Climate Action,' focuses on taking urgent action to combat ________ and its impacts." styleClass="question" wrapText="true"/>
+        <TextField fx:id="answerField4" layoutX="480.0" layoutY="400.0"/>
+    </Pane>
+
+    <Pane fx:id="questionPane5" visible="false" prefHeight="600.0" prefWidth="800.0" styleClass="bg">
+        <Button fx:id="backButton5" styleClass="clickButtons" layoutX="600.0" layoutY="500.0" text="Back"/>
+        <Label layoutX="70.0" layoutY="70.0" text="4 Pics 1 Word" styleClass="question"/>
+        <ImageView fx:id="pic1" layoutX="130.0" layoutY="170.0">
+            <image>
+                <Image url="@GradCap.png"/>
+            </image>
+        </ImageView>
+
+        <ImageView fx:id="pic2" layoutX="280.0" layoutY="180.0">
+            <image>
+                <Image url="@Laptop.jpeg"/>
+            </image>
+        </ImageView>
+
+        <ImageView fx:id="pic3" layoutX="130.0" layoutY="280.0">
+            <image>
+                <Image url="@Library.jpg"/>
+            </image>
+        </ImageView>
+
+        <ImageView fx:id="pic4" layoutX="280.0" layoutY="280.0">
+            <image>
+                <Image url="@Students.jpeg"/>
+            </image>
+        </ImageView>
+        <TextField fx:id="answerField5" layoutX="480.0" layoutY="400.0"/>
+    </Pane>
+
+    <Button fx:id="submitButton" styleClass="clickButtons" layoutX="400.0" layoutY="500.0" text="Submit" onAction="#submitAnswers" />
+    <VBox alignment="CENTER" AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+        <children>
+            <HBox>
+                <Region HBox.hgrow="ALWAYS" /> <!-- Left Spacer -->
+                <Button fx:id="exitButton" text="Exit to Menu" />
+            </HBox>
+        </children>
+    </VBox>
+</AnchorPane>

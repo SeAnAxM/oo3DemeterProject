@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.oo3demeterproject.MainMenuController"
+            prefWidth="800" prefHeight="600" styleClass = "background">
+    <top>
+        <AnchorPane>
+            <Label text="PATCH 1.0.0" styleClass="patchLabel" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="10"/>
+        </AnchorPane>
+    </top>
+    <center>
+        <VBox alignment="CENTER" spacing="15.0">
+            <Label text="Chasing Change: The Escape Room for World Changers" styleClass="title"/>
+            <Button fx:id="startGameButton" styleClass = "mainButton" text="Start Game" onAction="#onStartGameButtonClick"/>
+            <Button fx:id="viewStatsButton" styleClass = "mainButton" text="View Stats and Achievements" onAction="#onViewStatsButtonClick"/>
+            <Button fx:id="quitButton" styleClass = "mainButton" text="Quit" onAction="#onQuitButtonClick"/>
+        </VBox>
+    </center>
+
+    <bottom>
+        <AnchorPane>
+            <ImageView fx:id="characterImageView" fitHeight="200" fitWidth="260" AnchorPane.leftAnchor="0" AnchorPane.bottomAnchor="0"/>
+            <Label fx:id="welcomeLabel" layoutX="150" layoutY="-10" styleClass="Bubble"/>
+        </AnchorPane>
+    </bottom>
+
+</BorderPane>

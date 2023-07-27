@@ -1,0 +1,46 @@
+.background {
+    -fx-background-image: url('background.jpg');
+    -fx-background-size: stretch;
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat;
+}
+
+.title {
+    -fx-font-size: 24px;
+    -fx-margin-bottom: 20px;
+    -fx-text-weight: bold;
+    -fx-font-family: 'Century Gothic';
+}
+
+.achievements-box, .stats-box {
+    -fx-border-width: 3px;
+    -fx-border-color: #000;
+    -fx-border-style: solid;
+    -fx-padding: 20px;
+    -fx-width: 300px;
+    -fx-height: auto;
+    -fx-overflow-y: auto;
+    -fx-border-radius: 10px; /* This creates rounded corners. */
+    -fx-background-radius: 10px; /* This should match the border radius to keep the background color within the rounded border. */
+    -fx-background-color: #f5f5f5; /* This changes the background color of the box. */
+}
+
+.achievement, .stat {
+    -fx-font-size: 16px;
+    -fx-font-family: 'Comic Sans MS';
+    -fx-margin-bottom: 10px;
+    -fx-text-fill: #696969; /* This changes the color of the text. */
+}
+
+#exitButton {
+    -fx-font-size: 18px;
+    -fx-text-fill: #ffffff; /* white font color */
+    -fx-background-color: #ff0000;
+    -fx-border-radius: 5px;
+    -fx-padding: 10px 20px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 5, 0, 0, 1); /* 3D effect */
+}
+
+#exitButton:hover {
+    -fx-background-color: #ff4040;
+}

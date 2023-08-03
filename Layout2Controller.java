@@ -1,10 +1,21 @@
+/*
+ * Classname: Layout2Controller.java
+ *
+ * Author: Ray Derick Co, Sean Alexander Morales, & Joshua Inigo Salgado
+ *
+ * Date: August 3, 2023
+ *
+ * Description: The class consists of multiple questions, displayed one at a time, along with images and radio buttons
+ * for choices. The user can submit answers, receive hints, and proceed to the next part of the game upon successful
+ * completion. If the password is correct, the game proceeds to the next level, and the user's best time may be updated.
+ * There is also an option to exit to the main menu, with the current user's data passed along for display. Music and
+ * sound effects are managed using the game's sound controller.
+ */
+
 package com.example.oo3demeterproject;
 
-import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
-import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,7 +27,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.io.IOException;
@@ -28,20 +38,17 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import java.io.File;
 
-
-
-public class Layout2Controller {
+/**
+ * This class controls the behavior and handling of the events on the second game layout.
+ * It extends the LayoutController class, inheriting common behavior across all game layouts.
+ */
+public class Layout2Controller extends LayoutController{
     private String password;
     private List<Character> passwordLetters;
     private boolean[] answeredCorrectly = new boolean[5];
     @FXML
     private AnchorPane rootLayout;
-
-    private MediaPlayer mediaPlayer;
 
     @FXML
     private Pane mainPane, questionPane1, questionPane2, questionPane3, questionPane4, questionPane5;
@@ -66,14 +73,19 @@ public class Layout2Controller {
 
     private ToggleGroup toggleGroup1, toggleGroup2;
     private User user;
-    private String username;
-    private String appearance;
     private final String[] correctAnswers = {"17", "Eradicate hunger, secure food, improve nutrition, and boost sustainable farming.", "development", "climate change", "education"};
 
+    /**
+     * Sets the GameController for this layout.
+     * @param gameController the GameController to be used.
+     */
     public void setGameController(GameController gameController) {
         this.gameController = gameController;
     }
 
+    /**
+     * Starts the game by initializing the game components and starting the timer.
+     */
     public void startGame() {
         initialize();
         startTime = System.currentTimeMillis();
@@ -81,7 +93,19 @@ public class Layout2Controller {
 
     }
 
-    @FXML
+    /**
+     * Overrides the getGameNumber method from the superclass to return the game number for this specific layout.
+     * @return the number of the game for this layout.
+     */
+    @Override
+    public int getGameNumber() {
+        return 2;
+    }
+
+    /**
+     * Initializes the game components, sets the button events, and sets the visibility of game elements.
+     */
+    @Override
     public void initialize() {
 
         rootLayout.getStylesheets().add(getClass().getResource("layout2.css").toExternalForm());
@@ -140,6 +164,11 @@ public class Layout2Controller {
         exitButton.setOnAction(event -> exitToMenu());
     }
 
+    /**
+     * Event handler for showing the first question.
+     * If the question is already answered correctly, it provides feedback and does not show the question.
+     * @param event the ActionEvent triggered by the user.
+     */
     @FXML
     public void showQuestion1(ActionEvent event) {
         if(answeredCorrectly[0]) {
@@ -155,6 +184,12 @@ public class Layout2Controller {
         questionPane1.setVisible(true);
         submitButton.setVisible(true);
     }
+
+    /**
+     * Event handler for showing the second question.
+     * If the question is already answered correctly, it provides feedback and does not show the question.
+     * @param event the ActionEvent triggered by the user.
+     */
     @FXML
     public void showQuestion2(ActionEvent event) {
         if(answeredCorrectly[1]) {
@@ -169,6 +204,12 @@ public class Layout2Controller {
         questionPane2.setVisible(true);
         submitButton.setVisible(true);
     }
+
+    /**
+     * Event handler for showing the third question.
+     * If the question is already answered correctly, it provides feedback and does not show the question.
+     * @param event the ActionEvent triggered by the user.
+     */
     @FXML
     public void showQuestion3(ActionEvent event) {
         if(answeredCorrectly[2]) {
@@ -183,6 +224,12 @@ public class Layout2Controller {
         questionPane3.setVisible(true);
         submitButton.setVisible(true);
     }
+
+    /**
+     * Event handler for showing the fourth question.
+     * If the question is already answered correctly, it provides feedback and does not show the question.
+     * @param event the ActionEvent triggered by the user.
+     */
     @FXML
     public void showQuestion4(ActionEvent event) {
         if(answeredCorrectly[3]) {
@@ -197,6 +244,13 @@ public class Layout2Controller {
         questionPane4.setVisible(true);
         submitButton.setVisible(true);
     }
+
+    /**
+     * Event handler for showing the fifth question.
+     * If the question is already correctly answered, a confirmation message is shown.
+     * Otherwise, the question is displayed with settings for image size.
+     * @param event the ActionEvent triggered by the user.
+     */
     @FXML
     public void showQuestion5(ActionEvent event) {
         if(answeredCorrectly[4]) {
@@ -228,7 +282,11 @@ public class Layout2Controller {
         pic4.setPreserveRatio(true);
     }
 
-
+    /**
+     * Submit the answers for all question panes if they are currently visible and not yet correctly answered.
+     * Upon correct answer, pane visibility, button visibility, and texts are adjusted accordingly.
+     * For incorrect answers, a retry message is shown.
+     */
     @FXML
     public void submitAnswers() {
         if(questionPane1.isVisible() && !answeredCorrectly[0]){
@@ -374,6 +432,11 @@ public class Layout2Controller {
         }
     }
 
+    /**
+     * Reads a file containing a list of passwords and randomly selects one.
+     * @param fileName the name of the file to read
+     * @return the randomly selected password, or null if an error occurred
+     */
     private String getPasswordFromFile(String fileName) {
         try {
             InputStream in = getClass().getResourceAsStream(fileName);
@@ -390,8 +453,10 @@ public class Layout2Controller {
         }
     }
 
-
-
+    /**
+     * Check the password entered by the user. If it's correct, proceed to the next part of the game.
+     * Otherwise, display an error message.
+     */
     @FXML
     public void submitPassword() {
         String enteredPassword = passwordField.getText();
@@ -399,7 +464,6 @@ public class Layout2Controller {
         passwordField.setVisible(false);
         passwordSubmit.setVisible(false);
         if (password.equals(enteredPassword)) {
-            // password correct, go to layout3
             correctCode.setText("Correct answer, proceeding to part 3!");
             correctAnswer.setText("");
             correctAnswer.getStyleClass().add("correct-answer");
@@ -414,6 +478,9 @@ public class Layout2Controller {
         }
     }
 
+    /**
+     * Toggles the visibility of the password field and the password submission button.
+     */
     @FXML
     private void togglePasswordField() {
         boolean isVisible = passwordField.isVisible();
@@ -421,6 +488,11 @@ public class Layout2Controller {
         passwordSubmit.setVisible(!isVisible);
     }
 
+    /**
+     * Handles actions when a level is completed.
+     * Calculates the time spent on the level, updates the user's best time if needed,
+     * and plays a sound to indicate level completion.
+     */
     public void levelCompleted() {
         long endTime = System.currentTimeMillis();
         System.out.println("Timer for Layout2 stopped");
@@ -438,13 +510,12 @@ public class Layout2Controller {
         pause.play();
     }
 
+    /**
+     * Exit to the main menu, clearing the current layout.
+     * Current user data is passed to the main menu controller for display.
+     */
     private void exitToMenu() {
         rootLayout.getChildren().clear();
-
-
-        // Switch back to the main menu
-        // This will depend on your specific application structure
-        // As an example, assuming you have a separate "MenuController" class:
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
             Parent root = loader.load();
@@ -472,11 +543,16 @@ public class Layout2Controller {
         }
     }
 
-
+    /**
+     * Start the game music using the game's sound controller.
+     */
     public void startMusic() {
-        gameController.getSoundController().playGame2Music();
+        gameController.getSoundController().playGameMusic(getGameNumber());
     }
 
+    /**
+     * Stop the game music using the game's sound controller.
+     */
     public void stopMusic() {
         gameController.getSoundController().stopSound();
     }

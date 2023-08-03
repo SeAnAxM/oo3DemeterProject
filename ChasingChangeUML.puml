@@ -1,0 +1,343 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+package javafx.application {
+ class Application
+}
+
+package com.example.oo3demeterproject {
+
+class StartApp {
+    + start()
+    + {static}main()
+}
+
+class CharacterSetupController {
+    - userNameField : TextField
+    - businessmanImage : ImageView
+    - chefImage : ImageView
+    - doctorImage : ImageView
+    - submitButton : Button
+    - appearance : String
+    + initialize()
+    - selectImage()
+    # onSubmitButtonClick()
+
+}
+
+class MainMenuController {
+    - startGameButton : Button
+    - soundController : SoundController
+    - viewStatsButton : Button
+    - characterImageView : ImageView
+    - user : User
+    - welcomeLabel : Label
+    - username : String
+    - appearance : String
+    + setUsername()
+    + setAppearance()
+    - updateUI()
+    + initialize()
+    # onStartGameButtonClick()
+    # onViewStatsButtonClick()
+    # onQuitButtonClick()
+}
+
+class GameController {
+        - stage : Stage
+        - soundController : SoundController
+        - startTime : Instant
+        - totalStartTime : Instant
+        - endTime : Instant
+        - user : User
+        - username : String
+        - appearance : String
+        - layout1Scene : Scene
+        - layout2Scene : Scene
+        - layout3Scene : Scene
+        - layout1Controller : Layout1Controller
+        - layout2Controller : Layout2Controller
+        - layout3Controller : Layout3Controller
+        - currentLevel : int
+        + GameController()
+        + setUser()
+        + getUsername()
+        + setUsername()
+        + getAppearance()
+        + setAppearance()
+        + startGame()
+        + startLayout1()
+        + startLayout2()
+        + startLayout3()
+        + completeLevel()
+        + getSoundController()
+        + endGame()
+}
+
+interface Game{
+    + startGame()
+    + endGame()
+    + completeLevel()
+}
+
+class User {
+  - hasClearedEscapeRoom: boolean
+  - hasClearedEscapeRoomIn3Minutes: boolean
+  - hasClearedEscapeRoomIn2Minutes: boolean
+  - hasClearedEscapeRoomIn1Minute: boolean
+  - bestTime: long
+  - bestTimeRoom1: long
+  - bestTimeRoom2: long
+  - bestTimeRoom3: long
+  - timesRoom1: List<Long>
+  - timesRoom2: List<Long>
+  - timesRoom3: List<Long>
+  + updateAchievements()
+  + hasClearedEscapeRoom()
+  + hasClearedEscapeRoomIn3Minutes()
+  + hasClearedEscapeRoomIn2Minutes()
+  + hasClearedEscapeRoomIn1Minute()
+  + setBestTime()
+  + setBestTimeRoom1()
+  + setBestTimeRoom2()
+  + setBestTimeRoom3()
+  + getBestTime()
+  + addTimeRoom1()
+  + addTimeRoom2()
+  + addTimeRoom3()
+  + removeRecentTimeRoom1()
+  + removeRecentTimeRoom2()
+  + getBestTimeRoom1()
+  + getBestTimeRoom2()
+  + getBestTimeRoom3()
+}
+
+class UserSession {
+  - {static}instance: UserSession
+  - username: String
+  - appearance: String
+  - currentUser: User
+  - UserSession()
+  + {static}getInstance()
+  + setUsername()
+  + getUsername()
+  + setAppearance()
+  + getAppearance()
+  + setCurrentUser()
+  + getCurrentUser()
+}
+
+interface SoundPlayer {
+    + playSound()
+    + stopSound()
+    + playMainMenuMusic
+    + playGameMusic
+    + playRoomClearSound
+}
+
+class SoundController {
+  - {static}instance: SoundController
+  - mediaPlayer: MediaPlayer
+  - currentSoundFile: String
+  - SoundController()
+  + {static}getInstance()
+  + playSound()
+  + stopSound()
+  + playMainMenuMusic()
+  + playGameMusic()
+  + playRoomClearSound()
+}
+
+abstract class LayoutController {
+  # startTime: long
+  # gameController: GameController
+  + setGameController()
+  + startGame()
+  + startMusic()
+  + stopMusic()
+  + {abstract} initialize()
+  + {abstract} getGameNumber()
+}
+
+class StatsController {
+  - achievement1Image: ImageView
+  - achievement2Image: ImageView
+  - achievement3Image: ImageView
+  - achievement4Image: ImageView
+  - bestTimeLabel: Label
+  - bestTimeRoom1Label: Label
+  - bestTimeRoom2Label: Label
+  - bestTimeRoom3Label: Label
+  - mainPane: VBox
+  - exitButton: Button
+  - user: User
+  + initialize()
+  - displayAchievements()
+  - displayStats()
+  - exitToMenu()
+}
+
+class Layout1Controller {
+  - plasticBin: ImageView
+  - glassBin: ImageView
+  - paperBin: ImageView
+  - organicBin: ImageView
+  - mainPane: StackPane
+  - stackPane: Pane
+  - startTime: long
+  - exitButton: Button
+  - gameController: GameController
+  - scoreLabel: Label
+  - username: String
+  - appearance: String
+  - correctWasteCount: int
+  - {static}WASTE_IMAGES: String[]
+  - wasteCount: int[]
+  - orgSceneX: double
+  - orgSceneY: double
+  - orgTranslateX: double
+  - orgTranslateY: double
+  - totalWasteCount: int
+  + getGameNumber():
+  + setUsername()
+  + setAppearance()
+  + setGameController()
+  + initialize()
+  + startGame()
+  + startMusic()
+  + stopMusic()
+  - updateScoreLabel()
+  - spawnWaste()
+  - checkCorrectBin()
+  - getTotalWasteCount()
+  - levelCompleted()
+  - exitToMenu()
+}
+
+class Layout2Controller {
+    -password : String
+    -passwordLetters : List<Character>
+    -answeredCorrectly : boolean[5]
+    -rootLayout : AnchorPane
+    -mainPane : Pane
+    -questionPane1 : Pane
+    -questionPane2 : Pane
+    -questionPane3 : Pane
+    -questionPane4 : Pane
+    -questionPane5 : Pane
+    -backButton1 : Button
+    -backButton2 : Button
+    -backButton3 : Button
+    -backButton4 : Button
+    -backButton5 : Button
+    -submitButton : Button
+    -passwordSubmit : Button
+    -exitButton : Button
+    -correctAnswer : Label
+    -wrongAnswer : Label
+    -correctCode : Label
+    -wrongCode : Label
+    -hintLabel : Label
+    -choiceA1 : RadioButton
+    -choiceB1 : RadioButton
+    -choiceC1 : RadioButton
+    -choiceD1 : RadioButton
+    -choiceA2 : RadioButton
+    -choiceB2 : RadioButton
+    -choiceC2 : RadioButton
+    -choiceD2 : RadioButton
+    -startTime : long
+    -gameController : GameController
+    -answerField3 : TextField
+    -answerField4 : TextField
+    -answerField5 : TextField
+    -passwordField : TextField
+    -pic1 : ImageView
+    -pic2 : ImageView
+    -pic3 : ImageView
+    -pic4 : ImageView
+    -toggleGroup1 : ToggleGroup
+    -toggleGroup2 : ToggleGroup
+    -user : User
+    -CORRECT_ANSWERS : String[5]
+    +setGameController()
+    +startGame()
+    +getGameNumber()
+    +initialize()
+    +showQuestion1()
+    +showQuestion2()
+    +showQuestion3()
+    +showQuestion4()
+    +showQuestion5()
+    +submitAnswers()
+    +submitPassword()
+    +startMusic()
+    +stopMusic()
+    -getPasswordFromFile()
+    -togglePasswordField()
+    -levelCompleted()
+    -exitToMenu()
+}
+
+class Layout3Controller {
+    -rootLayout : AnchorPane
+    -gridPane : GridPane
+    -CARDS : String[]
+    -DECK : List<String>
+    -user : User
+    -startTime : long
+    -firstCard : Button
+    -secondCard : Button
+    -gameController : GameController
+    -exitButton : Button
+    -matchStatusLabel : Label
+    -CARD_BACK_IMAGE : Image
+    +setGameController()
+    +initialize()
+    +getGameNumber()
+    -flipCard()
+    -checkForMatch()
+    -checkGameFinished()
+    +startGame()
+    -levelCompleted()
+    -exitToMenu()
+    +startMusic()
+    +stopMusic()
+}
+
+class Card {
+    -imageIdentifier : String
+    -flipped : boolean
+    -matched : boolean
+    +Card()
+    +getImageIdentifier()
+    +flip()
+    +isMatched()
+    +setMatched()
+}
+
+}
+
+Application <|-- StartApp
+LayoutController <|-- Layout1Controller
+LayoutController <|-- Layout2Controller
+LayoutController <|-- Layout3Controller
+SoundController ..|> SoundPlayer
+GameController ..|> Game
+User --* UserSession : currentUser
+User --* StatsController : user
+Card --* Layout3Controller
+User --* Layout3Controller : user
+GameController --* Layout3Controller : gameController
+User --* Layout2Controller : user
+GameController --* Layout2Controller : gameController
+User --* Layout2Controller : user
+GameController --* Layout1Controller : gameController
+User --* Layout1Controller : user
+GameController --* Layout1Controller : gameController
+User --* MainMenuController : user
+SoundController --* MainMenuController : soundController
+
+
+
+@enduml

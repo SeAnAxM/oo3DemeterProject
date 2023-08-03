@@ -1,0 +1,43 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class GameController {
+        - stage : Stage
+        - soundController : SoundController
+        - startTime : Instant
+        - totalStartTime : Instant
+        - endTime : Instant
+        - user : User
+        - username : String
+        - appearance : String
+        - layout1Scene : Scene
+        - layout2Scene : Scene
+        - layout3Scene : Scene
+        - layout1Controller : Layout1Controller
+        - layout2Controller : Layout2Controller
+        - layout3Controller : Layout3Controller
+        - currentLevel : int
+        + GameController()
+        + setUser()
+        + getUsername()
+        + setUsername()
+        + getAppearance()
+        + setAppearance()
+        + startGame()
+        + startLayout1()
+        + startLayout2()
+        + startLayout3()
+        + completeLevel()
+        + getSoundController()
+        + endGame()
+}
+
+interface Game{
+    + startGame()
+    + endGame()
+    + completeLevel()
+}
+
+GameController ..|> Game
+
+@enduml

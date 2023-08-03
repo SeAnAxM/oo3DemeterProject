@@ -1,0 +1,58 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+class Layout1Controller {
+    other attributes
+    (other methods)
+    -startTime : long
+    -gameController : GameController
+    +initialize()
+    +getGameNumber()
+    +startGame()
+    +startMusic()
+    +stopMusic()
+}
+
+class Layout2Controller {
+    other attributes
+    (other methods)
+    -startTime : long
+    -gameController : GameController
+    +initialize()
+    +getGameNumber()
+    +startGame()
+    +startMusic()
+    +stopMusic()
+}
+
+class Layout3Controller {
+    other attributes
+    (other methods)
+    -startTime : long
+    -gameController : GameController
+    +initialize()
+    +getGameNumber()
+    +startGame()
+    +startMusic()
+    +stopMusic()
+}
+
+abstract class LayoutController {
+  # startTime: long
+  # gameController: GameController
+  + setGameController()
+  + startGame()
+  + startMusic()
+  + stopMusic()
+  + {abstract} initialize()
+  + {abstract} getGameNumber()
+}
+
+LayoutController <|-- Layout1Controller
+LayoutController <|-- Layout2Controller
+LayoutController <|-- Layout3Controller
+
+
+
+@enduml

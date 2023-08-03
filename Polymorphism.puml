@@ -1,0 +1,59 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface SoundPlayer {
+    + playSound()
+    + stopSound()
+    + playMainMenuMusic
+    + playGameMusic
+    + playRoomClearSound
+}
+
+class SoundController {
+  - {static}instance: SoundController
+  - mediaPlayer: MediaPlayer
+  - currentSoundFile: String
+  - SoundController()
+  + {static}getInstance()
+  + playSound()
+  + stopSound()
+  + playMainMenuMusic()
+  + playGameMusic()
+  + playRoomClearSound()
+}
+
+class Layout1Controller {
+    attributes
+    (other methods)
+  + startMusic()
+  + stopMusic()
+}
+
+class Layout2Controller {
+    attributes
+    (other methods)
+    +startMusic()
+    +stopMusic()
+}
+
+class Layout3Controller {
+    attributes
+    (other methods)
+    +startMusic()
+    +stopMusic()
+}
+
+class GameController {
+        other attributes
+        (other methods)
+        - soundController : SoundController
+        + getSoundController()
+}
+
+SoundController ..|> SoundPlayer
+GameController *-- SoundController
+Layout3Controller --* GameController
+Layout2Controller --* GameController
+Layout1Controller --* GameController
+
+@enduml

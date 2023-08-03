@@ -1,3 +1,18 @@
+/*
+ * Classname: MainMenuController.java
+ *
+ * Author: Ray Derick Co, Sean Alexander Morales, & Joshua Inigo Salgado
+ *
+ * Date: August 3, 2023
+ *
+ * Description: This class handles the logic and actions within the main menu interface of the application. This
+ * includes managing the user interface interactions such as button clicks and dynamically updating the UI based
+ * on user details, such as the user's chosen character image and username. This class is also responsible for
+ * transitioning the user from the main menu to the game scene or the statistics page. Furthermore, it integrates
+ * with the UserSession, GameController, and SoundController instances to ensure a consistent user experience
+ * throughout the game. It also handles user session updates, game launching, and music control in the main menu.
+ */
+
 package com.example.oo3demeterproject;
 
 import javafx.fxml.FXML;
@@ -10,21 +25,19 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import java.net.URL;
-
 import java.io.IOException;
 
+/**
+ * Main Menu Controller for the application.
+ * This class controls the UI interactions from the Main Menu.
+ */
 public class MainMenuController {
 
     @FXML
     private Button startGameButton;
-
     private SoundController soundController;
-
     @FXML
     private Button viewStatsButton;
-
-    @FXML
-    private Button quitButton;
 
     @FXML
     private ImageView characterImageView;
@@ -36,16 +49,28 @@ public class MainMenuController {
     private String username;
     private String appearance;
 
+    /**
+     * Sets the username.
+     * @param username The username of the user.
+     */
     public void setUsername(String username) {
         this.username = username;
         updateUI();
     }
 
+    /**
+     * Sets the appearance.
+     * @param appearance The appearance of the user.
+     */
     public void setAppearance(String appearance) {
         this.appearance = appearance;
         updateUI();
     }
 
+    /**
+     * Update UI elements.
+     * This method changes the character image view and welcome label text.
+     */
     private void updateUI() {
         if (appearance != null && username != null) {
             URL imageUrl = getClass().getResource("/com/example/oo3demeterproject/" + appearance.toLowerCase() + ".png");
@@ -54,6 +79,10 @@ public class MainMenuController {
         }
     }
 
+    /**
+     * Initialize the MainMenuController.
+     * This method is called after all @FXML annotated members have been injected.
+     */
     @FXML
     public void initialize() {
         soundController = SoundController.getInstance();
@@ -64,6 +93,11 @@ public class MainMenuController {
         soundController.playMainMenuMusic();
     }
 
+    /**
+     * Called when the 'Start Game' button is clicked.
+     * This method starts the game.
+     * @throws IOException If an I/O error occurs.
+     */
     @FXML
     protected void onStartGameButtonClick() throws IOException {
         UserSession session = UserSession.getInstance();
@@ -84,6 +118,11 @@ public class MainMenuController {
         gameController.startGame();
     }
 
+    /**
+     * Called when the 'View Stats' button is clicked.
+     * This method navigates to the statistics page.
+     * @throws IOException If an I/O error occurs.
+     */
     @FXML
     protected void onViewStatsButtonClick() throws IOException {
         UserSession session = UserSession.getInstance();
@@ -103,13 +142,12 @@ public class MainMenuController {
         currentStage.setScene(scene);
     }
 
+    /**
+     * Called when the 'Quit' button is clicked.
+     * This method quits the application.
+     */
     @FXML
     protected void onQuitButtonClick() {
         System.exit(0);
-    }
-
-    private void closeCurrentWindow() {
-        Stage currentStage = (Stage) startGameButton.getScene().getWindow();
-        currentStage.close();
     }
 }

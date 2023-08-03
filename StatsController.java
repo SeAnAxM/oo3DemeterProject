@@ -1,3 +1,17 @@
+/*
+ * Classname: StatsController.java
+ *
+ * Author: Ray Derick Co, Sean Alexander Morales, & Joshua Inigo Salgado
+ *
+ * Date: August 3, 2023
+ *
+ * Description: This class is a controller for the statistics view in the application. This class handles the display
+ * of user's achievements and best times in the different rooms of the escape room game. It uses JavaFX's FXML
+ * annotations to link the components of the user interface defined in an FXML document with their actions in the
+ * program. The StatsController is responsible for initializing these components, loading the user's data, displaying
+ * achievements, updating the best times labels, and handling the action of the exit button.
+ */
+
 package com.example.oo3demeterproject;
 
 import javafx.fxml.FXML;
@@ -13,6 +27,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Controller for the stats view. Shows the user's statistics, such as best times and achievements.
+ */
 public class StatsController {
 
     @FXML
@@ -30,6 +47,11 @@ public class StatsController {
     // Assuming there is only one user for now
     private User user = UserSession.getInstance().getCurrentUser();
 
+    /**
+     * Called to initialize the controller after its root element has been
+     * completely processed. It sets up the achievements and stats displays,
+     * and adds a handler to the exit button.
+     */
     @FXML
     public void initialize() {
         displayAchievements();
@@ -37,6 +59,9 @@ public class StatsController {
         exitButton.setOnAction(event -> exitToMenu());
     }
 
+    /**
+     * Displays the achievements that the user has earned.
+     */
     private void displayAchievements() {
         achievement1Image.setFitHeight(40);
         achievement1Image.setFitWidth(50);
@@ -67,6 +92,9 @@ public class StatsController {
         }
     }
 
+    /**
+     * Displays the user's best times.
+     */
     private void displayStats() {
         String bestTime = (user.getBestTime() == Long.MAX_VALUE) ? "0" : String.valueOf(user.getBestTime());
         bestTimeLabel.setText("Best Time: " + bestTime + " seconds");
@@ -78,6 +106,9 @@ public class StatsController {
         bestTimeRoom3Label.setText("Room 3: " + bestTimeRoom3+ " seconds");
     }
 
+    /**
+     * Exits to the main menu.
+     */
     private void exitToMenu() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));

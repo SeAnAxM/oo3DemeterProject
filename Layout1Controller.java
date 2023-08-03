@@ -1,9 +1,23 @@
+/*
+ * Classname: Layout1Controller.java
+ *
+ * Authors: Ray Derick Co, Sean Alexander Morales, & Joshua Inigo Salgado
+ *
+ * Date: August 3, 2023
+ *
+ * Description: This class is responsible for controlling the layout of the first level in a waste management game.
+ * It extends the LayoutController class and includes functionalities for initializing the layout, spawning different
+ * types of waste, checking if the waste has been placed in the correct bin, updating the score label, and handling
+ * actions for exiting to the main menu, starting the game, completing the level, starting and stopping music. It uses
+ * JavaFX to create an interactive user interface.
+ */
+
+
 package com.example.oo3demeterproject;
 
 import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.scene.image.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.util.*;
 import javafx.geometry.*;
@@ -14,11 +28,12 @@ import javafx.fxml.FXMLLoader;
 import java.io.IOException;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import java.io.File;
 
-public class Layout1Controller {
+/**
+ * Class responsible for controlling the layout of a level in the game, extending the LayoutController class.
+ * Includes methods for initializing the layout, spawning waste, checking bin correctness, and exiting to the menu, among others.
+ */
+public class Layout1Controller extends LayoutController{
 
     @FXML
     private ImageView plasticBin, glassBin, paperBin, organicBin;
@@ -26,16 +41,12 @@ public class Layout1Controller {
     private StackPane mainPane;
     @FXML
     private Pane stackPane;
-
-
-    private MediaPlayer mediaPlayer;
     private long startTime;
     @FXML
     private Button exitButton;
     private GameController gameController;
     @FXML
     private Label scoreLabel;
-
 
     private String username;
     private String appearance;
@@ -49,23 +60,51 @@ public class Layout1Controller {
     private double orgTranslateX, orgTranslateY;
     private int totalWasteCount = 0;
 
+    /**
+     * Method that gets the total count of waste
+     * @return The total count of waste
+     */
     private int getTotalWasteCount() {
         return totalWasteCount;
     }
 
+    /**
+     * Method that returns game number
+     * @return The number of the game
+     */
+    @Override
+    public int getGameNumber() {
+        return 1;
+    }
 
+    /**
+     * Method to set the username
+     * @param username The username to be set
+     */
     public void setUsername(String username) {
         this.username = username;
     }
 
+    /**
+     * Method to set the appearance
+     * @param appearance The appearance to be set
+     */
     public void setAppearance(String appearance) {
         this.appearance = appearance;
     }
+
+    /**
+     * Method to set the game controller
+     * @param gameController The game controller to be set
+     */
     public void setGameController(GameController gameController) {
         this.gameController = gameController;
     }
 
-
+    /**
+     * Method to initialize the layout
+     */
+    @Override
     public void initialize() {
         mainPane.getStylesheets().add(getClass().getResource("layout1.css").toExternalForm());
         Timeline wasteFallingTimeline = new Timeline(new KeyFrame(Duration.seconds(2), event -> spawnWaste()));
@@ -75,9 +114,16 @@ public class Layout1Controller {
         exitButton.setOnAction(event -> exitToMenu());
     }
 
+    /**
+     * Method to update the score label
+     */
     private void updateScoreLabel() {
         scoreLabel.setText("Wastes correctly placed: " + correctWasteCount + "/15");
     }
+
+    /**
+     * Method to spawn waste
+     */
     private void spawnWaste() {
         if (getTotalWasteCount() >= 16) {
             return;
@@ -95,7 +141,7 @@ public class Layout1Controller {
         waste.setFitWidth(80);
         waste.setFitHeight(80);
 
-        waste.setLayoutX(Math.random() * 100 + (stackPane.getWidth() / 2 - 50)); // Vary around the middle 100px
+        waste.setLayoutX(Math.random() * 100 + (stackPane.getWidth() / 2 - 50));
         waste.setLayoutY(-50);
 
         TranslateTransition transition = new TranslateTransition(Duration.seconds(10), waste);
@@ -104,17 +150,15 @@ public class Layout1Controller {
 
         transition.setOnFinished(event -> {
             if (waste.getLayoutY() + waste.getTranslateY() >= mainPane.getHeight()) {
-                // Waste has reached the bottom, so reset its position
                 waste.setLayoutY(-50);
                 waste.setTranslateY(0);
-                waste.setTranslateX(Math.random() * 100 + (stackPane.getWidth() / 2 - 50)); // Random horizontal position
+                waste.setTranslateX(Math.random() * 100 + (stackPane.getWidth() / 2 - 50));
                 transition.playFromStart();
             }
         });
 
-
         waste.setOnMousePressed(event -> {
-            transition.stop(); // Stop the falling animation when waste is picked up
+            transition.stop();
             orgSceneX = event.getSceneX();
             orgSceneY = event.getSceneY();
             orgTranslateX = waste.getTranslateX();
@@ -142,11 +186,11 @@ public class Layout1Controller {
                     levelCompleted();
                 }
             } else {
-                waste.setLayoutX(Math.random() * (stackPane.getWidth() - waste.getFitWidth())); // Set to random starting position
+                waste.setLayoutX(Math.random() * (stackPane.getWidth() - waste.getFitWidth()));
                 waste.setLayoutY(-50);
                 waste.setTranslateX(0);
                 waste.setTranslateY(0);
-                transition.playFromStart(); // Restart the falling animation if waste is not placed in a correct bin
+                transition.playFromStart();
             }
             event.consume();
         });
@@ -156,6 +200,12 @@ public class Layout1Controller {
         totalWasteCount++;
     }
 
+    /**
+     * Method to check if the waste is in the correct bin
+     * @param waste The waste to check
+     * @param wasteImageName The name of the waste image
+     * @return true if waste is in correct bin, false otherwise
+     */
     private boolean checkCorrectBin(ImageView waste, String wasteImageName) {
         Bounds wasteInStackPane = stackPane.sceneToLocal(waste.localToScene(waste.getBoundsInLocal()));
         Bounds paperBinInStackPane = stackPane.sceneToLocal(paperBin.localToScene(paperBin.getBoundsInLocal()));
@@ -164,39 +214,37 @@ public class Layout1Controller {
         Bounds plasticBinInStackPane = stackPane.sceneToLocal(plasticBin.localToScene(plasticBin.getBoundsInLocal()));
 
         if (wasteImageName.startsWith("paper") && wasteInStackPane.intersects(paperBinInStackPane)) {
-            System.out.println("Paper waste placed in the paper bin.");
             return true;
         }
         if (wasteImageName.startsWith("organic") && wasteInStackPane.intersects(organicBinInStackPane)) {
-            System.out.println("Organic waste placed in the organic bin.");
             return true;
         }
         if (wasteImageName.startsWith("glass") && wasteInStackPane.intersects(glassBinInStackPane)) {
-            System.out.println("Glass waste placed in the glass bin.");
             return true;
         }
         if (wasteImageName.startsWith("plastic") && wasteInStackPane.intersects(plasticBinInStackPane)) {
-            System.out.println("Plastic waste placed in the plastic bin.");
             return true;
         }
         return false;
     }
 
+    /**
+     * Method to start the game
+     */
     public void startGame() {
         initialize();
         startTime = System.currentTimeMillis();
-        System.out.println("Timer for Layout1 started");
-
     }
 
+    /**
+     * Method to be called when a level is completed
+     */
     public void levelCompleted() {
         long endTime = System.currentTimeMillis();
-        System.out.println("Timer for Layout1 stopped");
 
         long timeSpent = endTime - this.startTime;
-        System.out.println("Time spent in Layout1: " + timeSpent + " milliseconds");
 
-        User currentUser = UserSession.getInstance().getCurrentUser(); // Get the current User
+        User currentUser = UserSession.getInstance().getCurrentUser();
         currentUser.setBestTimeRoom1(Math.min(currentUser.getBestTimeRoom1(), timeSpent));
 
         gameController.getSoundController().playRoomClearSound();
@@ -206,25 +254,24 @@ public class Layout1Controller {
         pause.play();
     }
 
+    /**
+     * Method to exit to menu
+     */
     private void exitToMenu() {
-        // Clean up game state
         totalWasteCount = 0;
         correctWasteCount = 0;
         wasteCount = new int[4];
         stackPane.getChildren().clear();
         updateScoreLabel();
 
-        // Switch back to the main menu
-        // This will depend on your specific application structure
-        // As an example, assuming you have a separate "MenuController" class:
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
             Parent root = loader.load();
             MainMenuController mainMenuController = loader.getController();
 
             UserSession session = UserSession.getInstance();
-            mainMenuController.setUsername(session.getUsername()); // Pass username
-            mainMenuController.setAppearance(session.getAppearance()); // Pass appearance
+            mainMenuController.setUsername(session.getUsername());
+            mainMenuController.setAppearance(session.getAppearance());
 
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("mainmenu.css").toExternalForm());
@@ -236,10 +283,16 @@ public class Layout1Controller {
         }
     }
 
+    /**
+     * Method to start the music
+     */
     public void startMusic() {
-        gameController.getSoundController().playGame1Music();
+        gameController.getSoundController().playGameMusic(getGameNumber());
     }
 
+    /**
+     * Method to stop the music
+     */
     public void stopMusic() {
         gameController.getSoundController().stopSound();
     }

@@ -1,0 +1,53 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class User {
+  - hasClearedEscapeRoom: boolean
+  - hasClearedEscapeRoomIn3Minutes: boolean
+  - hasClearedEscapeRoomIn2Minutes: boolean
+  - hasClearedEscapeRoomIn1Minute: boolean
+  - bestTime: long
+  - bestTimeRoom1: long
+  - bestTimeRoom2: long
+  - bestTimeRoom3: long
+  - timesRoom1: List<Long>
+  - timesRoom2: List<Long>
+  - timesRoom3: List<Long>
+  + updateAchievements()
+  + hasClearedEscapeRoom()
+  + hasClearedEscapeRoomIn3Minutes()
+  + hasClearedEscapeRoomIn2Minutes()
+  + hasClearedEscapeRoomIn1Minute()
+  + setBestTime()
+  + setBestTimeRoom1()
+  + setBestTimeRoom2()
+  + setBestTimeRoom3()
+  + getBestTime()
+  + addTimeRoom1()
+  + addTimeRoom2()
+  + addTimeRoom3()
+  + removeRecentTimeRoom1()
+  + removeRecentTimeRoom2()
+  + getBestTimeRoom1()
+  + getBestTimeRoom2()
+  + getBestTimeRoom3()
+}
+
+class UserSession {
+  - {static}instance: UserSession
+  - username: String
+  - appearance: String
+  - currentUser: User
+  - UserSession()
+  + {static}getInstance()
+  + setUsername()
+  + getUsername()
+  + setAppearance()
+  + getAppearance()
+  + setCurrentUser()
+  + getCurrentUser()
+}
+
+User --* UserSession : currentUser
+
+@enduml

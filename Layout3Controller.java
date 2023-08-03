@@ -1,3 +1,19 @@
+/*
+ * Classname: Layout3Controller.java
+ *
+ * Author: Ray Derick Co, Sean Alexander Morales, & Joshua Inigo Salgado
+ *
+ * Date: August 3, 2023
+ *
+ * Description: This class, an extension of the LayoutController, is responsible for managing the third level layout
+ * of a card-matching game. It includes specific functions for card shuffling, matching logic, transitioning to the
+ * main menu, and managing the game's completion. Additionally, this class controls the game's interface elements,
+ * such as card images, layout styles, and the exit button functionality. This class also includes time tracking
+ * functionalities to record the time spent on the level and updates the user's best time for this level. Music for
+ * the game level can also be controlled by this class.
+ */
+
+
 package com.example.oo3demeterproject;
 
 import javafx.fxml.FXML;
@@ -14,8 +30,6 @@ import javafx.event.ActionEvent;
 import javafx.animation.PauseTransition;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.control.Label;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,7 +37,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class Layout3Controller {
+/**
+ * Layout3Controller class that extends the LayoutController.
+ * It represents a specific layout (Layout 3) for the game UI and includes game logic specific to this layout.
+ * This class manages game elements such as card shuffling, matching logic, game completion, and transitioning to the main menu.
+ */
+public class Layout3Controller extends LayoutController{
     @FXML private GridPane gridPane;
 
     @FXML
@@ -44,12 +63,22 @@ public class Layout3Controller {
 
     private final Image cardBackImage = new Image(getClass().getResource("/assets/back_card.png").toExternalForm());
 
+    /**
+     * Method to set the game controller instance in the layout.
+     *
+     * @param gameController GameController instance to be set in the layout.
+     */
     public void setGameController(GameController gameController) {
         this.gameController = gameController;
     }
 
-    @FXML
-    private void initialize() {
+    /**
+     * Overrides the initialize method of the parent class.
+     * It sets the style for the layout, shuffles the card deck, assigns images to the card buttons,
+     * and sets the exit button's action to return to the main menu.
+     */
+    @Override
+    public void initialize() {
         rootLayout.getStylesheets().add(getClass().getResource("layout3.css").toExternalForm());
         Collections.shuffle(deck); // Shuffle the deck for randomness
         for (Node node : gridPane.getChildren()) {
@@ -59,7 +88,7 @@ public class Layout3Controller {
                 int index = columnIndex + rowIndex * 2;
 
                 String imageUrl = "/assets/" + deck.get(index);
-                String imageIdentifier = imageUrl.substring(0, imageUrl.length() - 5); // remove "1.png" or "2.png"
+                String imageIdentifier = imageUrl.substring(0, imageUrl.length() - 5);
                 Card card = new Card(imageIdentifier);
                 node.setUserData(card);
 
@@ -72,6 +101,20 @@ public class Layout3Controller {
         exitButton.setOnAction(event -> exitToMenu());
     }
 
+    /**
+     * Returns the current game number.
+     *
+     * @return An integer representing the game number.
+     */
+    public int getGameNumber() {
+        return 3;
+    }
+
+    /**
+     * Handles the card flipping action event.
+     *
+     * @param event ActionEvent instance representing the current event.
+     */
     @FXML
     private void flipCard(ActionEvent event) {
         Button clickedCard = (Button) event.getSource();
@@ -86,8 +129,6 @@ public class Layout3Controller {
         imageView.setFitHeight(125);
         clickedCard.setGraphic(imageView);
 
-        // Note: We're not setting userData here, as it's already set to a Card instance in the initialize method.
-
         if (firstCard == null) {
             firstCard = clickedCard;
         } else if (secondCard == null) {
@@ -96,6 +137,9 @@ public class Layout3Controller {
         }
     }
 
+    /**
+     * Checks if the selected cards match.
+     */
     private void checkForMatch() {
         Card firstCardData = (Card) firstCard.getUserData();
         Card secondCardData = (Card) secondCard.getUserData();
@@ -131,23 +175,34 @@ public class Layout3Controller {
         }
     }
 
+    /**
+     * Checks if the game has finished by verifying if all cards have been matched.
+     */
     private void checkGameFinished() {
         for (Node node : gridPane.getChildren()) {
             if (node instanceof Button) {
                 Card card = (Card) node.getUserData();
                 if (!card.isMatched()) {
-                    return; // There are still cards not matched
+                    return;
                 }
             }
         }
         levelCompleted();
     }
+
+    /**
+     * Begins the game, initializing all necessary values and starting the timer.
+     */
     public void startGame() {
         initialize();
         startTime = System.currentTimeMillis();
         System.out.println("Timer for Layout3 started");
     }
 
+    /**
+     * Completes the current level, calculates and records the time spent,
+     * then transitions to the next level.
+     */
     public void levelCompleted() {
         long endTime = System.currentTimeMillis();
         System.out.println("Timer for Layout3 stopped");
@@ -155,7 +210,7 @@ public class Layout3Controller {
         long timeSpent = endTime - this.startTime;
         System.out.println("Time spent in Layout3: " + timeSpent + " milliseconds");
 
-        User currentUser = UserSession.getInstance().getCurrentUser(); // Get the current User
+        User currentUser = UserSession.getInstance().getCurrentUser();
         currentUser.setBestTimeRoom3(Math.min(currentUser.getBestTimeRoom3(), timeSpent));
 
         gameController.getSoundController().playRoomClearSound();
@@ -165,6 +220,9 @@ public class Layout3Controller {
         pause.play();
     }
 
+    /**
+     * Handles the action of exiting to the main menu.
+     */
     private void exitToMenu() {
 
         try {
@@ -173,8 +231,8 @@ public class Layout3Controller {
             MainMenuController mainMenuController = loader.getController();
 
             UserSession session = UserSession.getInstance();
-            mainMenuController.setUsername(session.getUsername()); // Pass username
-            mainMenuController.setAppearance(session.getAppearance()); // Pass appearance
+            mainMenuController.setUsername(session.getUsername());
+            mainMenuController.setAppearance(session.getAppearance());
 
             user = session.getCurrentUser();
             if (user == null) {
@@ -195,10 +253,16 @@ public class Layout3Controller {
         }
     }
 
+    /**
+     * Starts the game music for this layout.
+     */
     public void startMusic() {
-        gameController.getSoundController().playGame3Music();
+        gameController.getSoundController().playGameMusic(getGameNumber());
     }
 
+    /**
+     * Stops the game music for this layout.
+     */
     public void stopMusic() {
         gameController.getSoundController().stopSound();
     }

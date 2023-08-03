@@ -1,3 +1,18 @@
+/*
+ * Classname: GameController.java
+ *
+ * Authors: Ray Derick Co, Sean Alexander Morales, & Joshua Inigo Salgado
+ *
+ * Date: August 3, 2023
+ *
+ * Description: The GameController class manages the game state and flow, including setup, transitions, and game-end
+ * scenarios. It is responsible for implementing the Game interface. It sets up and controls different game scenes
+ * or 'layouts', each with its own controller. It also manages user data such as username and appearance, tracks game
+ * time, and communicates with the SoundController for sound effects and music. Furthermore, GameController manages
+ * the progression across the levels of the game and keeps track of player achievements.
+ */
+
+
 package com.example.oo3demeterproject;
 
 import javafx.fxml.FXMLLoader;
@@ -12,12 +27,12 @@ import javafx.application.Platform;
 import java.io.IOException;
 import javafx.scene.control.DialogPane;
 
-public class GameController {
-
-
+/**
+ * Implements the Game interface, representing a GameController that manages game state and flow.
+ * The GameController controls game progress across different layouts and keeps track of user data and game time.
+ */
+public class GameController implements Game{
     private Stage stage;
-    private Scene mainMenuScene;
-    private MainMenuController mainMenuController;
     private SoundController soundController;
     private Instant startTime, totalStartTime;
     private Instant endTime;
@@ -25,80 +40,112 @@ public class GameController {
 
     private String username;
     private String appearance;
+
+    /**
+     * Constructs a GameController with a given Stage.
+     *
+     * @param stage The stage to be used for the game
+     */
     public GameController(Stage stage) {
         this.stage = stage;
         this.soundController = SoundController.getInstance();
-        this.currentLevel = 0; // Set the initial level
+        this.currentLevel = 0;
     }
+
+    /**
+     * Sets the User for this game.
+     *
+     * @param user The User to be set
+     */
     public void setUser(User user) {
         this.user = user;
     }
 
-
-    // getter and setter for username and appearance
-
+    /**
+     * Returns the username associated with the current game instance.
+     *
+     * @return A String representing the username.
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * Sets the username for the current game instance.
+     *
+     * @param username A String representing the username to be set.
+     */
     public void setUsername(String username) {
         this.username = username;
     }
 
+    /**
+     * Returns the appearance associated with the current game instance.
+     *
+     * @return A String representing the appearance.
+     */
     public String getAppearance() {
         return appearance;
     }
 
+    /**
+     * Sets the appearance for the current game instance.
+     *
+     * @param appearance A String representing the appearance to be set.
+     */
     public void setAppearance(String appearance) {
         this.appearance = appearance;
     }
 
-    // Scenes for each layout
     private Scene layout1Scene;
     private Scene layout2Scene;
     private Scene layout3Scene;
 
-    // Controllers for each layout
     private Layout1Controller layout1Controller;
     private Layout2Controller layout2Controller;
     private Layout3Controller layout3Controller;
-
-    // Current game level
     private int currentLevel;
 
-
-        public void startGame() throws IOException {
-
+    /**
+     * Begins the game by setting up the scenes and controllers for the different layouts.
+     * Initializes the start time for the game.
+     */
+    @Override
+    public void startGame() {
+        try {
             this.setUser(UserSession.getInstance().getCurrentUser());
 
-            // Initialize Layout1
             FXMLLoader loader1 = new FXMLLoader(getClass().getResource("Layout1.fxml"));
             layout1Scene = new Scene(loader1.load());
             layout1Controller = loader1.getController();
-            layout1Controller.setGameController(this); // Pass a reference to this GameController
-            layout1Controller.setUsername(this.getUsername()); // Pass username
+            layout1Controller.setGameController(this);
+            layout1Controller.setUsername(this.getUsername());
             layout1Controller.setAppearance(this.getAppearance());
 
-            // Initialize Layout2
             FXMLLoader loader2 = new FXMLLoader(getClass().getResource("Layout2.fxml"));
-            layout2Scene = new Scene(loader2.load(),800,600);
+            layout2Scene = new Scene(loader2.load(), 800, 600);
             layout2Controller = loader2.getController();
-            layout2Controller.setGameController(this); // Pass a reference to this GameController
+            layout2Controller.setGameController(this);
 
-            // Initialize Layout3
             FXMLLoader loader3 = new FXMLLoader(getClass().getResource("Layout3.fxml"));
-            layout3Scene = new Scene(loader3.load(),800,600);
+            layout3Scene = new Scene(loader3.load(), 800, 600);
             layout3Controller = loader3.getController();
-            layout3Controller.setGameController(this); // Pass a reference to this GameController
+            layout3Controller.setGameController(this);
 
 
-
-            // Start the first game
-        startLayout1();
-        startTime = Instant.now();
-        totalStartTime = Instant.now();
+            startLayout1();
+            startTime = Instant.now();
+            totalStartTime = Instant.now();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
+    /**
+     * Starts the first layout of the game.
+     * The game scene is switched to layout1 and its game and music are started.
+     */
     public void startLayout1() {
         stage.setScene(layout1Scene);
         layout1Controller.startGame();
@@ -106,11 +153,13 @@ public class GameController {
         currentLevel = 1;
     }
 
+    /**
+     * Starts the second layout of the game.
+     * The game scene is switched to layout2 and its game and music are started.
+     */
     public void startLayout2() {
-        // Check that the previous level was completed
         currentLevel = 1;
         if (currentLevel < 1) {
-            // Maybe show an error message or something
             return;
         }
 
@@ -120,11 +169,13 @@ public class GameController {
         currentLevel = 2;
     }
 
+    /**
+     * Starts the third layout of the game.
+     * The game scene is switched to layout3 and its game and music are started.
+     */
     public void startLayout3() {
-        // Check that the previous level was completed
         currentLevel = 2;
         if (currentLevel < 2) {
-            // Maybe show an error message or something
             return;
         }
 
@@ -134,10 +185,12 @@ public class GameController {
         currentLevel = 3;
     }
 
-    // Add similar methods for the other layouts...
-
+    /**
+     * Completes the current level of the game and switches to the next level.
+     * The completion time for the level is recorded, and the next level is started if available.
+     */
+    @Override
     public void completeLevel() {
-        // Fetch the user from UserSession
         User user = UserSession.getInstance().getCurrentUser();
         endTime = Instant.now();
         if (currentLevel == 1) {
@@ -178,19 +231,24 @@ public class GameController {
                 alert.showAndWait();
             });
 
-            // Return to the main menu
-            exitToMainMenu();
-        }
-        else {
-            // You might want to handle the case when currentLevel is not 1, 2, or 3
+            endGame();
         }
     }
 
+    /**
+     * Returns the SoundController for this game.
+     *
+     * @return The SoundController of the game
+     */
     public SoundController getSoundController() {
         return soundController;
     }
 
-    public void exitToMainMenu() {
+    /**
+     * Ends the game and switches back to the main menu scene.
+     */
+    @Override
+    public void endGame() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
             Parent root = loader.load();
